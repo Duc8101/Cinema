@@ -30,10 +30,10 @@ public class Film {
     @Column(name = "country_code", nullable = false, length = FilmConst.MAX_LENGTH_COUNTRY_CODE)
     private String countryCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Genre genre;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Country country;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")

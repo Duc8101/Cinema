@@ -36,10 +36,10 @@ public class Show {
     @Column(name = "slot", nullable = false)
     private int slot;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Film film;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Room room;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "show")

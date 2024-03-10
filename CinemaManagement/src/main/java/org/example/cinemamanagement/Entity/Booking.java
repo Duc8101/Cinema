@@ -27,7 +27,7 @@ public class Booking {
     @Column(name = "amount", nullable = false)
     private double amount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Show show;
 
     public Booking(int showId, @NonNull String name, @NonNull String seatStatus, double amount) {
