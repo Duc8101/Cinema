@@ -36,13 +36,13 @@ public class Show {
     @Column(name = "slot", nullable = false)
     private int slot;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Film film;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "show")
     private List<Booking> bookings;
 
     public Show(int roomId, int filmId, Date showDate, double price, boolean status, int slot) {

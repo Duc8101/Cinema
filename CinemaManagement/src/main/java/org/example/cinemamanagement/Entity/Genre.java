@@ -21,7 +21,7 @@ public class Genre {
     @Column(name = "name", nullable = false, length = GenreConst.MAX_LENGTH_NAME)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "genre")
     private List<Film> films;
 
     public Genre(@NonNull String name) {

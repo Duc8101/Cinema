@@ -21,7 +21,7 @@ public class Country {
     @Column(name = "country_name", nullable = false, length = CountryConst.MAX_LENGTH_COUNTRY_NAME)
     private String countryName;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
     private List<Film> films;
 
     public Country(@NonNull String countryCode, @NonNull String countryName) {

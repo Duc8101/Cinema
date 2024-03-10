@@ -19,7 +19,6 @@ public class Room {
     private int roomId;
 
     @Column(name = "name", nullable = false, length = RoomConst.MAX_LENGTH_NAME)
-    @NonNull
     private String name;
 
     @Column(name = "number_rows", nullable = false)
@@ -28,7 +27,7 @@ public class Room {
     @Column(name = "number_cols", nullable = false)
     private int numberCols;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
     private List<Show> shows;
 
     public Room(@NonNull String name, int numberRows, int numberCols) {

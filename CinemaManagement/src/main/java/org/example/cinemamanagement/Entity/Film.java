@@ -22,7 +22,6 @@ public class Film {
     private int genreId;
 
     @Column(name = "title", nullable = false, length = FilmConst.MAX_LENGTH_TITLE)
-    @NonNull
     private String title;
 
     @Column(name = "year", nullable = false)
@@ -31,13 +30,13 @@ public class Film {
     @Column(name = "country_code", nullable = false, length = FilmConst.MAX_LENGTH_COUNTRY_CODE)
     private String countryCode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Genre genre;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")
     private List<Show> shows;
 
     public Film(int genreId, @NonNull String title, int year, @NonNull String countryCode) {
