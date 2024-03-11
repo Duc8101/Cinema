@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.example.cinemamanagement.Const.BookingConst;
 import org.springframework.lang.NonNull;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "bookings")
 public class Booking {
@@ -15,9 +17,6 @@ public class Booking {
     @Column(name = "booking_id", nullable = false)
     private int bookingId;
 
-    @Column(name = "show_id", nullable = false)
-    private int showId;
-
     @Column(name = "name", nullable = false, length = BookingConst.MAX_LENGTH_NAME)
     private String name;
 
@@ -25,17 +24,13 @@ public class Booking {
     private String seatStatus;
 
     @Column(name = "amount", nullable = false)
+    @NonNull
     private double amount;
 
     @ManyToOne
+    @JoinColumn(name = "show_id")
+    @NonNull
     private Show show;
-
-    public Booking(int showId, @NonNull String name, @NonNull String seatStatus, double amount) {
-        this.showId = showId;
-        this.name = name;
-        this.seatStatus = seatStatus;
-        this.amount = amount;
-    }
 
     public int getBookingId() {
         return bookingId;
@@ -43,14 +38,6 @@ public class Booking {
 
     public void setBookingId(int bookingId) {
         this.bookingId = bookingId;
-    }
-
-    public int getShowId() {
-        return showId;
-    }
-
-    public void setShowId(int showId) {
-        this.showId = showId;
     }
 
     @NonNull
@@ -71,11 +58,12 @@ public class Booking {
         this.seatStatus = seatStatus;
     }
 
+    @NonNull
     public double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(@NonNull double amount) {
         this.amount = amount;
     }
 

@@ -1,0 +1,65 @@
+<section th:replace="Shared/header"></section>
+<h1>Index</h1>
+<form action="/Show" method="post">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>RoomID</label><br /><br />
+            <select name="RoomID" class="form-control" >
+                <option th:each="room : ${rooms}" th:value="${room.getRoomId()}" th:text="${room.getName()}" th:if= "${RoomID == room.getRoomId()}" selected>
+
+                </option>
+                <option th:each="room : ${rooms}" th:value="${room.getRoomId()}" th:text="${room.getName()}" th:unless= "${RoomID == room.getRoomId()}">
+
+                </option>
+            </select>
+        </div><br />
+
+        <div class="form-group">
+            <label>ShowDate</label><br /><br />
+            <input type="date" name="date" class="form-control" th:value="${date == null ? '' : date}"/>
+        </div><br />
+
+        <div class="form-group">
+            <label>FilmID</label><br /><br />
+            <select name="FilmID" class="form-control">
+                <option th:each="film : ${films}" th:value="${film.getFilmId()}" th:text="${film.getTitle()}" th:if= "${FilmID == film.getFilmId()}" selected>
+
+                </option>
+                <option th:each="film : ${films}" th:value="${film.getFilmId()}" th:text="${film.getTitle()}" th:unless= "${FilmID == film.getFilmId()}">
+
+                </option>
+            </select>
+        </div><br />
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+</form><br>
+<a th:href="/Show/Create" th:unless="${session.user == null}">Create New</a>
+<p >The number of show: <span th:text="${shows.size()}"></span></p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ShowDate</th>
+        <th>Price</th>
+        <th>Slot</th>
+        <th>Film</th>
+        <th>Room</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="show: ${shows}" >
+        <td th:text="${show.getShowDate()}"></td>
+        <td th:text="${show.getPrice()}"></td>
+        <td th:text="${show.getSlot()}"></td>
+        <td th:text="${show.getFilm().getTitle()}"></td>
+        <td th:text="${show.getRoom().getName()}"></td>
+        <td>
+
+
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+<section th:replace="Shared/footer"></section>

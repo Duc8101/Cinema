@@ -1,9 +1,10 @@
 package org.example.cinemamanagement.Entity;
 
 import jakarta.persistence.*;
+import org.springframework.lang.NonNull;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -18,41 +19,31 @@ public class Show {
     @Column(name = "show_id", nullable = false)
     private int showId;
 
-    @Column(name = "room_id", nullable = false)
-    private int roomId;
-
-    @Column(name = "film_id", nullable = false)
-    private int filmId;
-
     @Column(name = "show_date")
     private Date showDate;
 
     @Column(name = "price", nullable = false)
+    @NonNull
     private double price;
 
     @Column(name = "status", nullable = false)
+    @NonNull
     private boolean status;
 
     @Column(name = "slot", nullable = false)
+    @NonNull
     private int slot;
 
     @ManyToOne
+    @JoinColumn(name = "film_id")
     private Film film;
 
     @ManyToOne
+    @JoinColumn(name = "room_id")
     private Room room;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "show")
     private List<Booking> bookings;
-
-    public Show(int roomId, int filmId, Date showDate, double price, boolean status, int slot) {
-        this.roomId = roomId;
-        this.filmId = filmId;
-        this.showDate = showDate;
-        this.price = price;
-        this.status = status;
-        this.slot = slot;
-    }
 
     public int getShowId() {
         return showId;
@@ -60,22 +51,6 @@ public class Show {
 
     public void setShowId(int showId) {
         this.showId = showId;
-    }
-
-    public int getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
-
-    public int getFilmId() {
-        return filmId;
-    }
-
-    public void setFilmId(int filmId) {
-        this.filmId = filmId;
     }
 
     public Date getShowDate() {

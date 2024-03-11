@@ -18,33 +18,22 @@ public class Film {
     @Column(name = "film_id", nullable = false)
     private int filmId;
 
-    @Column(name = "genre_id", nullable = false)
-    private int genreId;
-
     @Column(name = "title", nullable = false, length = FilmConst.MAX_LENGTH_TITLE)
     private String title;
 
     @Column(name = "year", nullable = false)
     private int year;
 
-    @Column(name = "country_code", nullable = false, length = FilmConst.MAX_LENGTH_COUNTRY_CODE)
-    private String countryCode;
-
     @ManyToOne
+    @JoinColumn(name = "genre_id")
     private Genre genre;
 
     @ManyToOne
+    @JoinColumn(name = "country_code")
     private Country country;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")
     private List<Show> shows;
-
-    public Film(int genreId, @NonNull String title, int year, @NonNull String countryCode) {
-        this.genreId = genreId;
-        this.title = title;
-        this.year = year;
-        this.countryCode = countryCode;
-    }
 
     public int getFilmId() {
         return filmId;
@@ -52,14 +41,6 @@ public class Film {
 
     public void setFilmId(int filmId) {
         this.filmId = filmId;
-    }
-
-    public int getGenreId() {
-        return genreId;
-    }
-
-    public void setGenreId(int genreId) {
-        this.genreId = genreId;
     }
 
     @NonNull
@@ -77,15 +58,6 @@ public class Film {
 
     public void setYear(int year) {
         this.year = year;
-    }
-
-    @NonNull
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public void setCountryCode(@NonNull String countryCode) {
-        this.countryCode = countryCode;
     }
 
     @NonNull
