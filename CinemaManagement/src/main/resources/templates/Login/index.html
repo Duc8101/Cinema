@@ -1,0 +1,23 @@
+<section th:replace="Shared/header"></section>
+<h1>Login</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form action="/Login" method="post">
+            <div class="form-group">
+                <label for="username" class="control-label">Username:</label><br /><br />
+                <input name="username" id="username" type="text" class="form-control" />
+            </div><br />
+            <div class="form-group">
+                <label for="password" class="control-label">Password:</label><br /><br />
+                <input name="password" id="password" type="password" class="form-control" />
+            </div><br />
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div><br />
+<p style="color:red" th:text="${message}"></p>
+<section th:replace="Shared/footer"></section>

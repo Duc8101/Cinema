@@ -55,8 +55,10 @@
         <td th:text="${show.getFilm().getTitle()}"></td>
         <td th:text="${show.getRoom().getName()}"></td>
         <td>
-
-
+             <a th:href="${'/Booking/'} + ${show.getShowId()}">Booking</a>
+             <span th:text=" '|'" th:unless="${session.user == null}"></span><a th:href="${'/Booking/Update/'} + ${show.getShowId()}" th:unless="${session.user == null}">Update</a>
+            <span th:text=" '|'" th:unless="${session.user == null}"></span><a th:href="${'/Booking/Detail/'} + ${show.getShowId()}" th:unless="${session.user == null}">Detail</a>
+            <span th:text=" '|'" th:unless="${session.user == null}"></span><a th:href="${'/Booking/Delete/'} + ${show.getShowId()}" th:unless="${session.user == null}">Delete</a>
         </td>
     </tr>
 
