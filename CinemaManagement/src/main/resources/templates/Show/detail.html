@@ -1,0 +1,43 @@
+<section th:replace="Shared/header"></section>
+<h1>Details</h1>
+
+<div>
+    <h4>Show</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            ShowDate
+        </dt>
+        <dd class="col-sm-10" th:text="${show.getShowDate()}">
+        </dd>
+        <dt class="col-sm-2">
+            Price
+        </dt>
+        <dd class="col-sm-10" th:text="${show.getPrice()}">
+
+        </dd>
+        <dt class="col-sm-2">
+            Slot
+        </dt>
+        <dd class="col-sm-10" th:text="${show.getSlot()}">
+
+        </dd>
+        <dt class="col-sm-2">
+            Film
+        </dt>
+        <dd class="col-sm-10" th:text="${show.getFilm().getTitle()}">
+
+        </dd>
+        <dt class="col-sm-2">
+            Room
+        </dt>
+        <dd class="col-sm-10" th:text="${show.getRoom().getName()}">
+
+        </dd>
+    </dl>
+</div>
+<div>
+    <a th:href="${'/Show/Update/'} + ${show.getShowId()}">Update</a> |
+    <a href="/Show">Back to List</a>
+</div>
+<section th:replace="Shared/footer"></section>

@@ -1,8 +1,10 @@
 package org.example.cinemamanagement.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.cinemamanagement.Service.ShowService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,5 +33,20 @@ public class ShowController {
         Map<String, Object> map = service.List(RoomID, FilmID, date);
         map.put("title", "Index");
         return new ModelAndView("/Show/list", map);
+    }
+
+    @GetMapping("/Detail/{ID}")
+    public ModelAndView Detail(@PathVariable("ID") int ShowID, HttpSession session){
+        String user = (String) session.getAttribute("user");
+        // if not login
+        if(user == null){
+            return new ModelAndView("redirect:/Home");
+        }
+        Map<String, Object> map = service.Detail(ShowID);
+        if(map.isEmpty()){
+            return new ModelAndView("redirect:/Show");
+        }
+        map.put("title", "Details");
+        return new ModelAndView("/Show/detail", map);
     }
 }

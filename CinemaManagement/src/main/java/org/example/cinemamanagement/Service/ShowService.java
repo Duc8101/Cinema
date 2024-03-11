@@ -42,7 +42,6 @@ public class ShowService {
             sqlDate = new java.sql.Date(dateFor.getTime());
             listShow = listShow.stream().filter(s -> s.getShowDate().equals(sqlDate)).toList();
         }
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         List<Room> listRoom = roomRepo.findAll();
         List<Film> listFilm = filmRepo.findAll();
         Map<String, Object> map = new HashMap<>();
@@ -52,6 +51,13 @@ public class ShowService {
         map.put("RoomID", RoomID);
         map.put("FilmID", FilmID);
         map.put("date", sqlDate);
+        return map;
+    }
+
+    public Map<String, Object> Detail(int ShowID){
+        Map<String, Object> map = new HashMap<>();
+        Optional<Show> option = showRepo.findById(ShowID);
+        option.ifPresent(show -> map.put("show", show));
         return map;
     }
 }
