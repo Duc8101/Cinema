@@ -33,7 +33,7 @@
         <input type="submit" value="Search" class="btn btn-primary" />
     </div>
 </form><br>
-<a th:href="/Show/Create" th:unless="${session.user == null}">Create New</a>
+<a href="/Show/Create" th:unless="${session.user == null}">Create New</a>
 <p >The number of show: <span th:text="${shows.size()}"></span></p>
 <table class="table">
     <thead>
@@ -56,9 +56,9 @@
         <td th:text="${show.getRoom().getName()}"></td>
         <td>
              <a th:href="${'/Booking/'} + ${show.getShowId()}">Booking</a>
-             <span th:text=" '|'" th:unless="${session.user == null}"></span><a th:href="${'/Booking/Update/'} + ${show.getShowId()}" th:unless="${session.user == null}">Update</a>
-            <span th:text=" '|'" th:unless="${session.user == null}"></span><a th:href="${'/Booking/Detail/'} + ${show.getShowId()}" th:unless="${session.user == null}">Detail</a>
-            <span th:text=" '|'" th:unless="${session.user == null}"></span><a th:href="${'/Booking/Delete/'} + ${show.getShowId()}" th:unless="${session.user == null}">Delete</a>
+             <span th:text=" '| '" th:unless="${session.user == null}"></span><a th:href="${'/Booking/Update/'} + ${show.getShowId()}" th:unless="${session.user == null}">Update</a>
+            <span th:text=" '| '" th:unless="${session.user == null}"></span><a th:href="${'/Booking/Detail/'} + ${show.getShowId()}" th:unless="${session.user == null}">Detail</a>
+            <span th:text=" '| '" th:unless="${session.user == null}"></span><a th:href="${'/Booking/Delete/'} + ${show.getShowId()}" th:unless="${session.user == null}">Delete</a>
         </td>
     </tr>
 

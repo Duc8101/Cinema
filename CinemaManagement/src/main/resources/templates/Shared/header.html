@@ -35,7 +35,7 @@
                     </li>
                     <li class="nav-item">
                         <a th:if="${session.user == null}" class="nav-link text-dark" href="/Login">Login</a>
-                        <a th:unless="${session.user == null}" class="nav-link text-dark" href="/Logout">Logout <span th:text="${session.user}"></span></a>
+                        <a th:unless="${session.user == null}" class="nav-link text-dark" href="/Logout">Logout (<span th:text="${session.user}"></span>)</a>
                     </li>
                 </ul>
             </div>
