@@ -1,6 +1,8 @@
 package org.example.cinemamanagement.Controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.example.cinemamanagement.DTO.ShowDTO.ShowCreateDTO;
+import org.example.cinemamanagement.Entity.Show;
 import org.example.cinemamanagement.Service.ShowService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,14 +27,14 @@ public class ShowController {
     public ModelAndView List() throws ParseException {
         Map<String, Object> map = service.List(null, null, null);
         map.put("title", "Index");
-        return new ModelAndView("/Show/list", map);
+        return new ModelAndView("/Show/List", map);
     }
 
     @PostMapping("")
     public ModelAndView List(int RoomID, int FilmID, String date) throws ParseException {
         Map<String, Object> map = service.List(RoomID, FilmID, date);
         map.put("title", "Index");
-        return new ModelAndView("/Show/list", map);
+        return new ModelAndView("/Show/List", map);
     }
 
     @GetMapping("/Detail/{ID}")
@@ -47,6 +49,30 @@ public class ShowController {
             return new ModelAndView("redirect:/Show");
         }
         map.put("title", "Details");
-        return new ModelAndView("/Show/detail", map);
+        return new ModelAndView("/Show/Detail", map);
+    }
+
+    @GetMapping("/Create")
+    public ModelAndView Create(HttpSession session){
+        String user = (String) session.getAttribute("user");
+        // if not login
+        if(user == null){
+            return new ModelAndView("redirect:/Home");
+        }
+        Map<String, Object> map = service.Create();
+        map.put("title", "Create");
+        return new ModelAndView("/Show/Create", map);
+    }
+
+    @PostMapping("/Create")
+    public ModelAndView Create(ShowCreateDTO DTO, int RoomID, int FilmID, String ShowDate, HttpSession session) throws ParseException {
+        String user = (String) session.getAttribute("user");
+        // if not login
+        if(user == null){
+            return new ModelAndView("redirect:/Home");
+        }
+        Map<String, Object> map = service.Create(DTO);
+        map.put("title", "Create");
+        return new ModelAndView("/Show/Create", map);
     }
 }

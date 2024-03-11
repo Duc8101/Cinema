@@ -1,5 +1,6 @@
 package org.example.cinemamanagement.Service;
 
+import org.example.cinemamanagement.DTO.ShowDTO.ShowCreateDTO;
 import org.example.cinemamanagement.Entity.Film;
 import org.example.cinemamanagement.Entity.Room;
 import org.example.cinemamanagement.Entity.Show;
@@ -40,7 +41,7 @@ public class ShowService {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date dateFor = sdf.parse(date);
             sqlDate = new java.sql.Date(dateFor.getTime());
-            listShow = listShow.stream().filter(s -> s.getShowDate().equals(sqlDate)).toList();
+            listShow = listShow.stream().filter(s -> s.getShowDate() != null && s.getShowDate().equals(sqlDate)).toList();
         }
         List<Room> listRoom = roomRepo.findAll();
         List<Film> listFilm = filmRepo.findAll();
@@ -58,6 +59,57 @@ public class ShowService {
         Map<String, Object> map = new HashMap<>();
         Optional<Show> option = showRepo.findById(ShowID);
         option.ifPresent(show -> map.put("show", show));
+        return map;
+    }
+
+    public Map<String, Object> Create(){
+        List<Room> listRoom = roomRepo.findAll();
+        List<Film> listFilm = filmRepo.findAll();
+        List<Integer> slots = Arrays.asList(1 , 2 , 3 , 4 , 5 , 6 , 7, 8, 9);
+        Map<String, Object> map = new HashMap<>();
+        map.put("rooms", listRoom);
+        map.put("films", listFilm);
+        map.put("slots", slots);
+        return map;
+    }
+
+    public Map<String, Object> Create(ShowCreateDTO DTO) throws ParseException {
+        Map<String, Object> map = Create();
+        java.sql.Date sqlDate;
+        if (DTO.getShowDate() == null || DTO.getShowDate().trim().isEmpty()) {
+            // Get the current date in milliseconds
+            long millis = System.currentTimeMillis();
+            // Convert milliseconds to a java.util.Date object
+            Date today = new Date(millis);
+            // Convert java.util.Date to a java.sql.Date object (only date part)
+            sqlDate = java.sql.Date.valueOf(today.toString());
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(DTO.getShowDate());
+            sqlDate = new java.sql.Date(date.getTime());;
+        }
+        List<Show> listShow = showRepo.findAll().stream().filter(s -> s.getRoom().getRoomId() == DTO.getRoomID() && s.getShowDate().equals(sqlDate) && s.getSlot() == DTO.getSlot()).toList();
+        if(listShow.isEmpty()){
+            Optional<Room> room = roomRepo.findById(DTO.getRoomID());
+            if(room.isEmpty()){
+                map.put("error", "Not found room");
+            }
+            Optional<Film> film = filmRepo.findById(DTO.getFilmID());
+            if(film.isEmpty()){
+                map.put("error", "Not found film");
+            }
+            Show show = new Show();
+            show.setStatus(false);
+            show.setShowDate(sqlDate);
+            show.setRoom(room.get());
+            show.setFilm(film.get());
+            show.setPrice(DTO.getPrice());
+            show.setSlot(DTO.getSlot());
+            showRepo.save(show);
+            map.put("success", "Create successful");
+            return map;
+        }
+        map.put("error", "Show with Room '" + listShow.get(0).getRoom().getName() + "', date " + listShow.get(0).getShowDate() + " and slot " + listShow.get(0).getSlot() + " existed");
         return map;
     }
 }

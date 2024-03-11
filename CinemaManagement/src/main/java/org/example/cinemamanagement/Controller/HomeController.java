@@ -14,13 +14,13 @@ public class HomeController {
     public ModelAndView Index() {
         Map<String, String> map = new HashMap<>();
         map.put("title", "Home Page");
-        return new ModelAndView("/Home/index", map);
+        return new ModelAndView("/Home/Index", map);
     }
 
     @GetMapping("/Privacy")
     public ModelAndView Privacy() {
         Map<String, String> map = new HashMap<>();
         map.put("title", "Privacy Policy");
-        return new ModelAndView("/Home/privacy", map);
+        return new ModelAndView("/Home/Privacy", map);
     }
 }

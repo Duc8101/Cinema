@@ -2,7 +2,6 @@ package org.example.cinemamanagement.Controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.cinemamanagement.Service.LoginService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +23,7 @@ public class LoginController {
     public ModelAndView Index() {
         Map<String, String> map = new HashMap<>();
         map.put("title", "Login");
-        return new ModelAndView("/Login/index", map);
+        return new ModelAndView("/Login/Index", map);
     }
 
     @PostMapping("")
@@ -37,7 +36,7 @@ public class LoginController {
             return new ModelAndView("redirect:/Home");
         }
         map.put("message", "Don't have that user");
-        return new ModelAndView("/Login/index", map);
+        return new ModelAndView("/Login/Index", map);
     }
 
 }

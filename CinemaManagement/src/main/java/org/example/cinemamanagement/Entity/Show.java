@@ -19,7 +19,7 @@ public class Show {
     @Column(name = "show_id", nullable = false)
     private int showId;
 
-    @Column(name = "show_date")
+    @Column(name = "show_date", nullable = false)
     private Date showDate;
 
     @Column(name = "price", nullable = false)
@@ -52,12 +52,12 @@ public class Show {
     public void setShowId(int showId) {
         this.showId = showId;
     }
-
+    @NonNull
     public Date getShowDate() {
         return showDate;
     }
 
-    public void setShowDate(Date showDate) {
+    public void setShowDate(@NonNull Date showDate) {
         this.showDate = showDate;
     }
 

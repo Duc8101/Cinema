@@ -1,0 +1,52 @@
+<section th:replace="Shared/Header"></section>
+<h1>Create</h1>
+<h4>Show</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <p style="color:red" th:text="${error}"></p>
+        <p style="color:green" th:text="${success}"></p>
+        <form action="/Show/Create" method="post">
+            <div class="form-group">
+                <label class="control-label">roomId</label><br /><br />
+                <select name="RoomID" class="form-control">
+                        <option th:each="room : ${rooms}" th:value="${room.getRoomId()}" th:text="${room.getName()}">
+
+                        </option>
+                </select>
+            </div><br />
+            <div class="form-group">
+                <label class="control-label">ShowDate</label><br /><br />
+                <input type="date" name="ShowDate" class="form-control" required/>
+            </div><br />
+            <div class="form-group">
+                <label class="control-label">Price</label><br /><br />
+                <input type="number" name="price" class="form-control" step="any" value="0" min="0" required />
+            </div><br />
+            <div class="form-group">
+                <label class="control-label">Slot</label><br /><br />
+                <select name="slot" class="form-control">
+                    <option th:each="slot : ${slots}" th:value="${slot}" th:text="${slot}">
+
+                    </option>
+                </select>
+            </div><br />
+            <div class="form-group">
+                <label class="control-label">FilmID</label><br /><br />
+                <select name="FilmID" class="form-control">
+                    <option th:each="film : ${films}" th:value="${film.getFilmId()}" th:text="${film.getTitle()}">
+
+                    </option>
+                </select>
+            </div><br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a href="/Show">Back to List</a>
+</div>
+<section th:replace="Shared/Footer"></section>
