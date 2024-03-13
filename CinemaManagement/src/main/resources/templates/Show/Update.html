@@ -11,10 +11,7 @@
             <div class="form-group">
                 <label class="control-label">FilmID</label><br /><br />
                 <select name="FilmID" class="form-control">
-                    <option th:each="film : ${films}" th:value="${film.getFilmId()}" th:text="${film.getTitle()}" th:if="${show.getFilm().getFilmId() == film.getFilmId()}" selected>
-
-                    </option>
-                    <option th:each="film : ${films}" th:value="${film.getFilmId()}" th:text="${film.getTitle()}" th:unless="${show.getFilm().getFilmId() == film.getFilmId()}">
+                    <option th:each="film : ${films}" th:value="${film.getFilmId()}" th:text="${film.getTitle()}" th:selected="${show.getFilm().getFilmId() == film.getFilmId()}">
 
                     </option>
                 </select>

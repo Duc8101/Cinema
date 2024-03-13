@@ -5,10 +5,7 @@
         <div class="form-group">
             <label>RoomID</label><br /><br />
             <select name="RoomID" class="form-control" >
-                <option th:each="room : ${rooms}" th:value="${room.getRoomId()}" th:text="${room.getName()}" th:if= "${RoomID == room.getRoomId()}" selected>
-
-                </option>
-                <option th:each="room : ${rooms}" th:value="${room.getRoomId()}" th:text="${room.getName()}" th:unless= "${RoomID == room.getRoomId()}">
+                <option th:each="room : ${rooms}" th:value="${room.getRoomId()}" th:text="${room.getName()}" th:selected= "${RoomID == room.getRoomId()}">
 
                 </option>
             </select>
@@ -22,10 +19,7 @@
         <div class="form-group">
             <label>FilmID</label><br /><br />
             <select name="FilmID" class="form-control">
-                <option th:each="film : ${films}" th:value="${film.getFilmId()}" th:text="${film.getTitle()}" th:if= "${FilmID == film.getFilmId()}" selected>
-
-                </option>
-                <option th:each="film : ${films}" th:value="${film.getFilmId()}" th:text="${film.getTitle()}" th:unless= "${FilmID == film.getFilmId()}">
+                <option th:each="film : ${films}" th:value="${film.getFilmId()}" th:text="${film.getTitle()}" th:selected= "${FilmID == film.getFilmId()}">
 
                 </option>
             </select>
