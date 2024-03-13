@@ -8,7 +8,7 @@
         <p style="color:green" th:text="${success}"></p>
         <form action="/Show/Create" method="post">
             <div class="form-group">
-                <label class="control-label">roomId</label><br /><br />
+                <label class="control-label">RoomId</label><br /><br />
                 <select name="RoomID" class="form-control">
                         <option th:each="room : ${rooms}" th:value="${room.getRoomId()}" th:text="${room.getName()}">
 
