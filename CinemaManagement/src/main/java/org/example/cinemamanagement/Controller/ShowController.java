@@ -2,7 +2,7 @@ package org.example.cinemamanagement.Controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.cinemamanagement.DTO.ShowDTO.ShowCreateDTO;
-import org.example.cinemamanagement.Entity.Show;
+import org.example.cinemamanagement.DTO.ShowDTO.ShowUpdateDTO;
 import org.example.cinemamanagement.Service.ShowService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,7 +65,7 @@ public class ShowController {
     }
 
     @PostMapping("/Create")
-    public ModelAndView Create(ShowCreateDTO DTO, int RoomID, int FilmID, String ShowDate, HttpSession session) throws ParseException {
+    public ModelAndView Create(ShowCreateDTO DTO, HttpSession session) throws ParseException {
         String user = (String) session.getAttribute("user");
         // if not login
         if(user == null){
@@ -74,5 +74,35 @@ public class ShowController {
         Map<String, Object> map = service.Create(DTO);
         map.put("title", "Create");
         return new ModelAndView("/Show/Create", map);
+    }
+
+    @GetMapping("/Update/{ID}")
+    public ModelAndView Update(@PathVariable("ID") int ShowID, HttpSession session){
+        String user = (String) session.getAttribute("user");
+        // if not login
+        if(user == null){
+            return new ModelAndView("redirect:/Home");
+        }
+        Map<String, Object> map = service.Update(ShowID);
+        if(map == null){
+            return new ModelAndView("redirect:/Show");
+        }
+        map.put("title", "Edit");
+        return new ModelAndView("/Show/Update", map);
+    }
+
+    @PostMapping("/Update/{ID}")
+    public ModelAndView Update(@PathVariable("ID") int ShowID, ShowUpdateDTO DTO, HttpSession session){
+        String user = (String) session.getAttribute("user");
+        // if not login
+        if(user == null){
+            return new ModelAndView("redirect:/Home");
+        }
+        Map<String, Object> map = service.Update(ShowID, DTO);
+        if(map == null){
+            return new ModelAndView("redirect:/Show");
+        }
+        map.put("title", "Edit");
+        return new ModelAndView("/Show/Update", map);
     }
 }

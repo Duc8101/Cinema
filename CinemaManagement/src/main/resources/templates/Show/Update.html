@@ -1,0 +1,49 @@
+<section th:replace="Shared/Header"></section>
+<h1>Edit</h1>
+
+<h4>Show</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <p style="color:green" th:text="${success}"></p>
+        <form th:action="${'/Show/Update/'} + ${show.getShowId()}" method="post">
+            <div class="form-group">
+                <label class="control-label">FilmID</label><br /><br />
+                <select name="FilmID" class="form-control">
+                    <option th:each="film : ${films}" th:value="${film.getFilmId()}" th:text="${film.getTitle()}" th:if="${show.getFilm().getFilmId() == film.getFilmId()}" selected>
+
+                    </option>
+                    <option th:each="film : ${films}" th:value="${film.getFilmId()}" th:text="${film.getTitle()}" th:unless="${show.getFilm().getFilmId() == film.getFilmId()}">
+
+                    </option>
+                </select>
+            </div><br />
+
+            <div class="form-group">
+                <label class="control-label">Price</label><br /><br />
+                <input type="number" name="price" class="form-control" step="any" th:value="${show.getPrice()}" min="0" required />
+            </div><br />
+            <div class="form-group">
+                <label class="control-label">Slot</label><br /><br />
+                <select name="slot" class="form-control">
+                    <option th:each="slot : ${slots}" th:value="${slot}" th:text="${slot}" th:if="${show.getSlot() == slot}" selected>
+
+                    </option>
+
+                    <option th:each="slot : ${slots}" th:value="${slot}" th:text="${slot}" th:unless="${show.getSlot() == slot}">
+
+                    </option>
+                </select>
+            </div><br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a href="/Show">Back to List</a>
+</div>
+<section th:replace="Shared/Footer"></section>
