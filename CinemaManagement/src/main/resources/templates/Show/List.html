@@ -29,6 +29,7 @@
 </form><br>
 <a href="/Show/Create" th:unless="${session.user == null}">Create New</a>
 <p >The number of show: <span th:text="${shows.size()}"></span></p>
+<p style="color:green" th:text="${success}"></p>
 <table class="table">
     <thead>
     <tr>
@@ -52,7 +53,7 @@
              <a th:href="${'/Booking/'} + ${show.getShowId()}">Booking</a>
              <span th:text=" '| '" th:unless="${session.user == null}"></span><a th:href="${'/Show/Update/'} + ${show.getShowId()}" th:unless="${session.user == null}">Update</a>
             <span th:text=" '| '" th:unless="${session.user == null}"></span><a th:href="${'/Show/Detail/'} + ${show.getShowId()}" th:unless="${session.user == null}">Detail</a>
-            <span th:text=" '| '" th:unless="${session.user == null}"></span><a th:href="${'/Show/Delete/'} + ${show.getShowId()}" th:unless="${session.user == null}">Delete</a>
+            <span th:text=" '| '" th:unless="${session.user == null}"></span><a th:href="${'/Show/Delete/'} + ${show.getShowId()}" th:unless="${session.user == null}" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
         </td>
     </tr>
 

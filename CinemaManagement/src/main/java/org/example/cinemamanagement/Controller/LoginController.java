@@ -15,6 +15,7 @@ import java.util.Map;
 @RequestMapping(value = "/Login")
 public class LoginController {
     private final LoginService service;
+
     public LoginController(LoginService service) {
         this.service = service;
     }
@@ -27,11 +28,11 @@ public class LoginController {
     }
 
     @PostMapping("")
-    public ModelAndView Index(String username , String password, HttpSession session){
+    public ModelAndView Index(String username, String password, HttpSession session) {
         Map<String, String> map = new HashMap<>();
         map.put("title", "Login");
         boolean isSuccess = service.Index(username, password);
-        if(isSuccess){
+        if (isSuccess) {
             session.setAttribute("user", username);
             return new ModelAndView("redirect:/Home");
         }

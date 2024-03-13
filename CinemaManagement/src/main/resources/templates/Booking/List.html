@@ -1,0 +1,42 @@
+<section th:replace="Shared/Header"></section>
+<h1>Index</h1>
+<p>Seat Status:</p>
+<th:block th:each="row : ${rows}">
+    <th:block th:each="col : ${cols}">
+        <input type="checkbox" class="form-check-input" th:checked="${data.get(numberRow * (row - 1) + col - 1)}" disabled>
+    </th:block>
+    <br>
+</th:block>
+<br>
+<a href="/Booking/Create" th:unless="${session.user == null}">Create New</a>
+<p>The number of Booking : <span th:text="${listBooking.size()}"></span></p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Amount
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="booking : ${listBooking}">
+        <td th:text="${booking.getName()}"></td>
+        <td th:text="${booking.getAmount()}"></td>
+        <td>
+            <a th:href="${'/Booking/Update/'} + ${booking.getBookingId()}" th:unless="${session.user == null}">Update</a>
+            <span th:text="${' |'}" th:unless="${session.user == null}"></span>
+            <a th:href="${'/Booking/Detail/'} + ${booking.getBookingId()}" th:unless="${session.user == null}">Detail</a>
+            <span th:text="${' |'}" th:unless="${session.user == null}"></span>
+            <a th:href="${'/Booking/Delete/'} + ${booking.getBookingId()}" th:unless="${session.user == null}" onclick="return confirm('Are you sure you want to save your change?')">Delete</a>
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>
+<section th:replace="Shared/Footer"></section>

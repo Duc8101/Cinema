@@ -105,4 +105,21 @@ public class ShowController {
         map.put("title", "Edit");
         return new ModelAndView("/Show/Update", map);
     }
+
+    @GetMapping("/Delete/{ID}")
+    public ModelAndView Delete(@PathVariable("ID") int ShowID, HttpSession session) throws ParseException {
+        String user = (String) session.getAttribute("user");
+        // if not login
+        if(user == null){
+            return new ModelAndView("redirect:/Home");
+        }
+        boolean check = service.Delete(ShowID);
+        if(check){
+            Map<String, Object> map = service.List(null, null, null);
+            map.put("title", "Index");
+            map.put("success", "Delete successful");
+            return new ModelAndView("/Show/List", map);
+        }
+        return new ModelAndView("redirect:/Show");
+    }
 }

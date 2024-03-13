@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 @Service
 public class ShowService {
     private final ShowRepository showRepo;
@@ -56,17 +57,17 @@ public class ShowService {
         return map;
     }
 
-    public Map<String, Object> Detail(int ShowID){
+    public Map<String, Object> Detail(int ShowID) {
         Map<String, Object> map = new HashMap<>();
         Optional<Show> option = showRepo.findById(ShowID);
         option.ifPresent(show -> map.put("show", show));
         return map;
     }
 
-    public Map<String, Object> Create(){
+    public Map<String, Object> Create() {
         List<Room> listRoom = roomRepo.findAll();
         List<Film> listFilm = filmRepo.findAll();
-        List<Integer> slots = Arrays.asList(1 , 2 , 3 , 4 , 5 , 6 , 7, 8, 9);
+        List<Integer> slots = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         Map<String, Object> map = new HashMap<>();
         map.put("rooms", listRoom);
         map.put("films", listFilm);
@@ -90,14 +91,14 @@ public class ShowService {
             sqlDate = new java.sql.Date(date.getTime());
         }
         List<Show> listShow = showRepo.findAll().stream().filter(s -> s.getRoom().getRoomId() == DTO.getRoomID() && s.getShowDate().equals(sqlDate) && s.getSlot() == DTO.getSlot()).toList();
-        if(listShow.isEmpty()){
+        if (listShow.isEmpty()) {
             Optional<Room> room = roomRepo.findById(DTO.getRoomID());
-            if(room.isEmpty()){
+            if (room.isEmpty()) {
                 map.put("error", "Not found room");
                 return map;
             }
             Optional<Film> film = filmRepo.findById(DTO.getFilmID());
-            if(film.isEmpty()){
+            if (film.isEmpty()) {
                 map.put("error", "Not found film");
                 return map;
             }
@@ -118,19 +119,19 @@ public class ShowService {
 
     private void setData(Map<String, Object> map, Show show) {
         List<Film> listFilm = filmRepo.findAll();
-        List<Integer> allSlots = Arrays.asList(1 , 2 , 3 , 4 , 5 , 6 , 7, 8, 9);
+        List<Integer> allSlots = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         List<Show> listShow = showRepo.findAll().stream().filter(
                 s -> s.getRoom().getRoomId() == show.getRoom().getRoomId()
                         && s.getShowDate().equals(show.getShowDate())
-                        &&  s.getSlot() != show.getSlot()
+                        && s.getSlot() != show.getSlot()
         ).toList();
         List<Integer> listSlot = new ArrayList<>();
-        for(Show item : listShow){
+        for (Show item : listShow) {
             listSlot.add(item.getSlot());
         }
         List<Integer> slots = new ArrayList<>();
-        for(int slot : allSlots){
-            if(!listSlot.contains(slot)){
+        for (int slot : allSlots) {
+            if (!listSlot.contains(slot)) {
                 slots.add(slot);
             }
         }
@@ -139,10 +140,10 @@ public class ShowService {
         map.put("show", show);
     }
 
-    public Map<String, Object> Update(int ShowID){
+    public Map<String, Object> Update(int ShowID) {
         Map<String, Object> map = new HashMap<>();
         Optional<Show> option = showRepo.findById(ShowID);
-        if(option.isEmpty()){
+        if (option.isEmpty()) {
             return null;
         }
         Show show = option.get();
@@ -150,13 +151,13 @@ public class ShowService {
         return map;
     }
 
-    public Map<String, Object> Update(int ShowID, ShowUpdateDTO DTO){
+    public Map<String, Object> Update(int ShowID, ShowUpdateDTO DTO) {
         Optional<Film> optionFilm = filmRepo.findById(DTO.getFilmID());
-        if(optionFilm.isEmpty()){
+        if (optionFilm.isEmpty()) {
             return null;
         }
         Optional<Show> optionShow = showRepo.findById(ShowID);
-        if(optionShow.isEmpty()){
+        if (optionShow.isEmpty()) {
             return null;
         }
         Map<String, Object> map = new HashMap<>();
@@ -171,5 +172,13 @@ public class ShowService {
         return map;
     }
 
-
+    public boolean Delete(int ShowID) {
+        Optional<Show> option = showRepo.findById(ShowID);
+        if (option.isEmpty()) {
+            return false;
+        }
+        Show show = option.get();
+        showRepo.delete(show);
+        return true;
+    }
 }

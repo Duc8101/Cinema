@@ -8,15 +8,7 @@ public class ShowCreateDTO extends ShowUpdateDTO{
         return ShowDate;
     }
 
-    public void setShowDate(String showDate) {
-        ShowDate = showDate;
-    }
-
     public int getRoomID() {
         return RoomID;
-    }
-
-    public void setRoomID(int roomID) {
-        RoomID = roomID;
     }
 }
