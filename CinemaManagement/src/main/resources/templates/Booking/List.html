@@ -3,7 +3,8 @@
 <p>Seat Status:</p>
 <th:block th:each="row : ${rows}">
     <th:block th:each="col : ${cols}">
-        <input type="checkbox" class="form-check-input" th:checked="${data.get(numberRow * (row - 1) + col - 1)}" disabled>
+        <input type="checkbox" class="form-check-input" th:checked="${data.get(numberRow * (row - 1) + col - 1)}"
+               disabled>
     </th:block>
     <br>
 </th:block>
@@ -28,11 +29,13 @@
         <td th:text="${booking.getName()}"></td>
         <td th:text="${booking.getAmount()}"></td>
         <td>
-            <a th:href="${'/Booking/Update/'} + ${booking.getBookingId()}" th:unless="${session.user == null}">Update</a>
+            <a th:href="${'/Booking/Update/'} + ${booking.getBookingId()}"
+               th:unless="${session.user == null}">Update</a>
             <span th:text="${' |'}" th:unless="${session.user == null}"></span>
-            <a th:href="${'/Booking/Detail/'} + ${booking.getBookingId()}" th:unless="${session.user == null}">Detail</a>
+            <a th:href="${'/Booking/Detail/'} + ${booking.getBookingId()}">Detail</a>
             <span th:text="${' |'}" th:unless="${session.user == null}"></span>
-            <a th:href="${'/Booking/Delete/'} + ${booking.getBookingId()}" th:unless="${session.user == null}" onclick="return confirm('Are you sure you want to save your change?')">Delete</a>
+            <a th:href="${'/Booking/Delete/'} + ${booking.getBookingId()}" th:unless="${session.user == null}"
+               onclick="return confirm('Are you sure you want to save your change?')">Delete</a>
         </td>
     </tr>
 

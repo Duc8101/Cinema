@@ -29,7 +29,6 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "show_id")
-    @NonNull
     private Show show;
 
     public int getBookingId() {
