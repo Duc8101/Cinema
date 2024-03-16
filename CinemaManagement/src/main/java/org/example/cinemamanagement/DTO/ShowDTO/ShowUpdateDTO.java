@@ -17,4 +17,15 @@ public class ShowUpdateDTO {
         return FilmID;
     }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setSlot(int slot) {
+        this.slot = slot;
+    }
+
+    public void setFilmID(int filmID) {
+        FilmID = filmID;
+    }
 }

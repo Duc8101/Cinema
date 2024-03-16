@@ -1,12 +1,12 @@
 package org.example.cinemamanagement.DTO.BookingDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookingCreateUpdateDTO {
     private String name;
     private double amount;
     private int ShowID;
-    private List<Integer> check;
 
     public String getName() {
         return name;
@@ -20,7 +20,16 @@ public class BookingCreateUpdateDTO {
         return ShowID;
     }
 
-    public List<Integer> getCheck() {
-        return check;
+    public void setName(String name) {
+        this.name = name;
     }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setShowID(int showID) {
+        ShowID = showID;
+    }
+
 }
