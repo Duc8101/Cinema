@@ -1,0 +1,59 @@
+<section th:replace="Shared/Header"></section>
+<h1>Update</h1>
+
+<h4>Booking</h4>
+<p id="error" style="color:red" th:text="${error}"></p>
+<p style="color:green" th:text="${success}"></p>
+<form th:action="${'/Booking/Update/'} + ${book.getBookingId()}" method="post">
+    <input type="hidden" name="ShowID" th:value="${book.getShow().getShowId()}" />
+    <input type="hidden" id="price" th:value="${book.getShow().getPrice()}">
+    <th:block th:each="row : ${rows}">
+        <th:block th:each="col : ${cols}">
+            <input type="checkbox" class="form-check-input" name="seat" th:checked="${dataChecked.get(numberRow * (row - 1) + col - 1)}"
+                   th:disabled="${dataDisabled.get(numberRow * (row - 1) + col - 1)}" th:value="${numberRow * (row - 1) + col - 1}">
+        </th:block>
+        <br>
+    </th:block>
+    <div class="form-group">
+        <label for="Name" class="control-label">Name</label><br /><br />
+        <input type="text" name="name" id="name" required class="form-control" th:value="${book.getName()}"/>
+    </div><br />
+    <div class="form-group">
+        <label for="Amount" class="control-label">Amount</label><br /><br />
+        <input type="number" step="any" name="amount" id="amount" readonly th:value="${book.getAmount()}" required class="form-control" />
+    </div><br />
+    <div class="form-group">
+        <input type="submit" value="Update" class="btn btn-primary" onclick="myFunction()" />
+    </div>
+</form>
+
+<script>
+    function handleSubmit(event) {
+        event.preventDefault();
+    }
+    function myFunction(){
+        confirm('Are you sure you want to save your change?')
+        const name = document.getElementById("name");
+        if (name.value.trim().length === 0) {
+            document.getElementById("error").innerHTML = "You have to input name";
+            handleSubmit(event);
+        }
+    }
+    const amount = document.getElementById("amount");
+    const checkbox = document.getElementsByName("check");
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const price = document.getElementById("price");
+    checkboxes.forEach(checkbox => {
+        // Xử lý sự kiện change cho checkbox này
+        checkbox.addEventListener('change', function (event) {
+            if(checkbox.checked){
+                document.getElementById("amount").value = parseFloat(amount.value) + parseFloat(price.value);
+            }else{
+                document.getElementById("amount").value = parseFloat(amount.value) - parseFloat(price.value);
+            }
+
+        });
+    });
+
+</script>
+<section th:replace="Shared/Footer"></section>

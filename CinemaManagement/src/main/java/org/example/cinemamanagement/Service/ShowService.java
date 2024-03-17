@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class ShowService {
@@ -27,14 +28,14 @@ public class ShowService {
     }
 
     public Map<String, Object> List(Integer RoomID, Integer FilmID, String date) throws ParseException {
-        List<Show> listShow = showRepo.findAll();
+        Stream<Show> stream = showRepo.findAll().stream();
         java.sql.Date sqlDate;
         if (RoomID != null) {
-            listShow = listShow.stream().filter(s -> s.getRoom().getRoomId() == RoomID).toList();
+            stream = stream.filter(s -> s.getRoom().getRoomId() == RoomID);
         }
 
         if (FilmID != null) {
-            listShow = listShow.stream().filter(s -> s.getFilm().getFilmId() == FilmID).toList();
+            stream = stream.filter(s -> s.getFilm().getFilmId() == FilmID);
         }
 
         if (date == null || date.trim().isEmpty()) {
@@ -43,8 +44,9 @@ public class ShowService {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date dateFor = sdf.parse(date);
             sqlDate = new java.sql.Date(dateFor.getTime());
-            listShow = listShow.stream().filter(s -> s.getShowDate().equals(sqlDate)).toList();
+            stream = stream.filter(s -> s.getShowDate().equals(sqlDate));
         }
+        List<Show> listShow = stream.toList();
         List<Room> listRoom = roomRepo.findAll();
         List<Film> listFilm = filmRepo.findAll();
         Map<String, Object> map = new HashMap<>();

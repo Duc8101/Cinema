@@ -2,6 +2,7 @@ package org.example.cinemamanagement.Controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.cinemamanagement.DTO.BookingDTO.BookingCreateUpdateDTO;
+import org.example.cinemamanagement.Entity.Booking;
 import org.example.cinemamanagement.Service.BookingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -69,5 +70,46 @@ public class BookingController {
         }
         map.put("title", "Create");
         return new ModelAndView("/Booking/Create", map);
+    }
+
+    @GetMapping("/Update/{BookingID}")
+    public ModelAndView Update(@PathVariable("BookingID") int BookingID, HttpSession session) {
+        String user = (String) session.getAttribute("user");
+        if (user == null) {
+            return new ModelAndView("redirect:/Home");
+        }
+        Map<String, Object> map = service.Update(BookingID);
+        if (map == null) {
+            return new ModelAndView("redirect:/Show");
+        }
+        map.put("title", "Update");
+        return new ModelAndView("/Booking/Update", map);
+    }
+
+    @PostMapping("/Update/{BookingID}")
+    public ModelAndView Update(@PathVariable("BookingID") int BookingID, BookingCreateUpdateDTO DTO, @RequestParam("seat") List<Integer> checkSeat, HttpSession session) {
+        String user = (String) session.getAttribute("user");
+        if (user == null) {
+            return new ModelAndView("redirect:/Home");
+        }
+        Map<String, Object> map = service.Update(BookingID, DTO, checkSeat);
+        if (map == null) {
+            return new ModelAndView("redirect:/Show");
+        }
+        map.put("title", "Create");
+        return new ModelAndView("/Booking/Update", map);
+    }
+
+    @GetMapping("/Delete/{BookingID}")
+    public String Delete(@PathVariable("BookingID") int BookingID, HttpSession session){
+        String user = (String) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/Home";
+        }
+        Booking book = service.Delete(BookingID);
+        if(book == null){
+            return "redirect:/Show";
+        }
+        return "redirect:/Booking/" + book.getShow().getShowId();
     }
 }
