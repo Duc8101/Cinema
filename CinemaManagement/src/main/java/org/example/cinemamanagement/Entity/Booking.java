@@ -17,13 +17,13 @@ public class Booking {
     @Column(name = "booking_id", nullable = false)
     private int bookingId;
 
-    @Column(name = "name", nullable = false, length = BookingConst.MAX_LENGTH_NAME)
+    @Column(name = "name", nullable = false, columnDefinition = "nvarchar(" + BookingConst.MAX_LENGTH_NAME + ")")
     private String name;
 
-    @Column(name = "seat_status", nullable = false, length = BookingConst.MAX_LENGTH_SEAT_STATUS)
+    @Column(name = "seat_status", nullable = false, columnDefinition = "nvarchar(" + BookingConst.MAX_LENGTH_SEAT_STATUS + ")")
     private String seatStatus;
 
-    @Column(name = "amount", nullable = false)
+    @Column(name = "amount", nullable = false, columnDefinition = "money")
     @NonNull
     private double amount;
 

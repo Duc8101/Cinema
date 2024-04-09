@@ -18,7 +18,7 @@ public class Film {
     @Column(name = "film_id", nullable = false)
     private int filmId;
 
-    @Column(name = "title", nullable = false, length = FilmConst.MAX_LENGTH_TITLE)
+    @Column(name = "title", nullable = false, columnDefinition = "nvarchar(" + FilmConst.MAX_LENGTH_TITLE + ")")
     private String title;
 
     @Column(name = "year", nullable = false)
@@ -29,7 +29,7 @@ public class Film {
     private Genre genre;
 
     @ManyToOne
-    @JoinColumn(name = "country_code")
+    @JoinColumn(name = "country_code", columnDefinition = "nchar(" + FilmConst.MAX_LENGTH_COUNTRY_CODE + ")")
     private Country country;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")

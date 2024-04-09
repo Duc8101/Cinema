@@ -15,10 +15,10 @@ public class Country {
     }
 
     @Id
-    @Column(name = "country_code", nullable = false, length = CountryConst.MAX_LENGTH_COUNTRY_CODE)
+    @Column(name = "country_code", nullable = false, columnDefinition = "nchar(" + CountryConst.MAX_LENGTH_COUNTRY_CODE + ")")
     private String countryCode;
 
-    @Column(name = "country_name", nullable = false, length = CountryConst.MAX_LENGTH_COUNTRY_NAME)
+    @Column(name = "country_name", nullable = false, columnDefinition = "nvarchar(" + CountryConst.MAX_LENGTH_COUNTRY_NAME + ")")
     private String countryName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
@@ -46,6 +46,7 @@ public class Country {
     public void setCountryName(@NonNull String countryName) {
         this.countryName = countryName;
     }
+
     @NonNull
     public List<Film> getFilms() {
         return films;

@@ -18,7 +18,7 @@ public class Room {
     @Column(name = "room_id", nullable = false)
     private int roomId;
 
-    @Column(name = "name", nullable = false, length = RoomConst.MAX_LENGTH_NAME)
+    @Column(name = "name", nullable = false, columnDefinition = "nvarchar(" + RoomConst.MAX_LENGTH_NAME + ")")
     private String name;
 
     @Column(name = "number_rows", nullable = false)

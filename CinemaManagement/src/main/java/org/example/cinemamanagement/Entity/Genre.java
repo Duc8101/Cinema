@@ -18,7 +18,7 @@ public class Genre {
     @Column(name = "genre_id", nullable = false)
     private int genreId;
 
-    @Column(name = "name", nullable = false, length = GenreConst.MAX_LENGTH_NAME)
+    @Column(name = "name", nullable = false, columnDefinition = "nvarchar(" + GenreConst.MAX_LENGTH_NAME + ")")
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "genre")
