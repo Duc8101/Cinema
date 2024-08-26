@@ -13,13 +13,17 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Stream;
+import org.example.cinemamanagement.DAO.DAOShow;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class ShowService {
+
     private final ShowRepository showRepo;
     private final RoomRepository roomRepo;
     private final FilmRepository filmRepo;
+    @Autowired
+    private DAOShow daoShow;
 
     public ShowService(ShowRepository showRepo, RoomRepository roomRepo, FilmRepository filmRepo) {
         this.showRepo = showRepo;
@@ -28,25 +32,15 @@ public class ShowService {
     }
 
     public Map<String, Object> List(Integer RoomID, Integer FilmID, String date) throws ParseException {
-        Stream<Show> stream = showRepo.findAll().stream();
         java.sql.Date sqlDate;
-        if (RoomID != null) {
-            stream = stream.filter(s -> s.getRoom().getRoomId() == RoomID);
-        }
-
-        if (FilmID != null) {
-            stream = stream.filter(s -> s.getFilm().getFilmId() == FilmID);
-        }
-
         if (date == null || date.trim().isEmpty()) {
             sqlDate = null;
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date dateFor = sdf.parse(date);
             sqlDate = new java.sql.Date(dateFor.getTime());
-            stream = stream.filter(s -> s.getShowDate().equals(sqlDate));
         }
-        List<Show> listShow = stream.toList();
+        List<Show> listShow = daoShow.getListShow(RoomID, FilmID, date);
         List<Room> listRoom = roomRepo.findAll();
         List<Film> listFilm = filmRepo.findAll();
         Map<String, Object> map = new HashMap<>();
@@ -124,8 +118,8 @@ public class ShowService {
         List<Integer> allSlots = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         List<Show> listShow = showRepo.findAll().stream().filter(
                 s -> s.getRoom().getRoomId() == show.getRoom().getRoomId()
-                        && s.getShowDate().equals(show.getShowDate())
-                        && s.getSlot() != show.getSlot()
+                && s.getShowDate().equals(show.getShowDate())
+                && s.getSlot() != show.getSlot()
         ).toList();
         List<Integer> listSlot = new ArrayList<>();
         for (Show item : listShow) {
